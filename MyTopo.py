@@ -35,18 +35,12 @@ class QuaggaTopo(Topo):
 
         # List of Quagga host configs
         quaggaHosts = []
-        quaggaHosts.append(QuaggaHost(name='H1', ip='172.0.1.1/16',
-                                      loIP='10.0.1.1/24'))
-        quaggaHosts.append(QuaggaHost(name='R1', ip='172.0.1.2/16',
-                                      loIP='10.0.2.1/24'))
-        quaggaHosts.append(QuaggaHost(name='R2', ip='173.0.1.2/16',
-					                loIP='10.0.3.1/24'))
-	    quaggaHosts.append(QuaggaHost(name='R3', ip='174.0.1.2/16',
-					                loIP=None))
-	    quaggaHosts.append(QuaggaHost(name='R4', ip='177.0.1.2/16',
-                                      loIP='10.0.3.1/24'))
-        quaggaHosts.append(QuaggaHost(name='H2', ip='177.0.1.1/16',
-                                      loIP='10.0.3.1/24'))
+        quaggaHosts.append(QuaggaHost(name='H1', ip='172.0.1.1/16', loIP='10.0.1.1/24'))
+        quaggaHosts.append(QuaggaHost(name='R1', ip='172.0.1.2/16', loIP='10.0.2.1/24'))
+        quaggaHosts.append(QuaggaHost(name='R2', ip='173.0.1.2/16', loIP='10.0.3.1/24'))
+        quaggaHosts.append(QuaggaHost(name='R3', ip='173.0.1.2/16', loIP=None))
+        quaggaHosts.append(QuaggaHost(name='R4', ip='173.0.1.2/16', loIP='10.0.3.1/24'))
+        quaggaHosts.append(QuaggaHost(name='H2', ip='173.0.1.1/16', loIP='10.0.3.1/24'))
         #quaggaHosts.append(QuaggaHost(name='R4', ip='177.0.1.1/16',
         #                              loIP='10.0.4.1/24'))
         #quaggaHosts.append(QuaggaHost(name='H2', ip='177.0.1.2/16',
@@ -54,7 +48,7 @@ class QuaggaTopo(Topo):
 
         # Add switch for IXP fabric
         # ixpfabric = self.addSwitch('fabric-sw1')
-	    hosts = []
+        hosts=[]
         # Setup each Quagga router, add a link between it and the IXP fabric
         for host in quaggaHosts:
 
