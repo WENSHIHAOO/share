@@ -87,9 +87,6 @@ def run():
     net.get("R3").cmd("ip route add 193.0.1.0/24 via 194.0.1.1")
     net.get("R2").cmd("ip route add 196.0.1.0/24 via 195.0.1.2")
 
-    info('** Testing network connectivity\n')
-    net.ping(net.hosts)
-
     info('** Dumping host processes\n')
 
     for host in net.hosts:
