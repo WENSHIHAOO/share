@@ -37,19 +37,12 @@ class MyTopo(Topo):
         h2 = self.addHost( 'H2', ip='175.16.0.1/16', defaultRoute='via 175.16.0.2/16' )
         # List of Quagga host configs
         
-        self.addLink( h1, r1, intfName2='h1-eth0',
-                      params2={ 'ip' : '170.16.0.1/16' } ) 
-        self.addLink( r1, r2, intfName2='r1-eth1',
-                      params2={ 'ip' : '171.16.0.1/16' } )
-        self.addLink( r1, r3, intfName2='r1-eth2',
-                      params2={ 'ip' : '172.16.0.1/16' } )
-        self.addLink( r2, r4, intfName2='r2-eth1',
-                      params2={ 'ip' : '173.16.0.1/16' } )
-        self.addLink( r3, r4, intfName2='r3-eth1',
-                      params2={ 'ip' : '174.16.0.1/16' } )
-        self.addLink( h2, r4, intfName2='r4-eth2',
-                      params2={ 'ip' : '175.16.0.1/16' } )
-        
+        self.addLink( h1, r1, intfName2='H1-R1') 
+        self.addLink( r1, r2, intfName2='R1-R2')
+        self.addLink( r1, r3, intfName2='R1-R3')
+        self.addLink( r2, r4, intfName2='R2-R4')
+        self.addLink( r3, r4, intfName2='R3-R4')
+        self.addLink( h2, r4, intfName2='H2-R4')
 def run():
     "Test linux router"
     topo = MyTopo()
@@ -60,6 +53,20 @@ def run():
     info( net[ 'R2' ].cmd( 'route' ) )
     info( net[ 'R3' ].cmd( 'route' ) )
     info( net[ 'R4' ].cmd( 'route' ) )
+    
+    net.get('H1').cmd('ifconfig H1-eth0 170.16.0.1/16')
+    net.get('R1').cmd('ifconfig R1-eth0 170.16.0.2/16')
+    net.get('R1').cmd('ifconfig R1-eth1 171.16.0.1/16')
+    net.get('R1').cmd('ifconfig R1-eth2 172.16.0.1/16')
+    net.get('R2').cmd('ifconfig R2-eth0 171.16.0.2/16')
+    net.get('R2').cmd('ifconfig R2-eth1 173.16.0.1/16')
+    net.get('R3').cmd('ifconfig R3-eth0 172.16.0.2/16')
+    net.get('R3').cmd('ifconfig R3-eth1 174.16.0.1/16')
+    net.get('R4').cmd('ifconfig R4-eth0 173.16.0.2/16')
+    net.get('R4').cmd('ifconfig R4-eth1 174.16.0.2/16')
+    net.get('R4').cmd('ifconfig R4-eth2 175.16.0.2/16')
+    net.get('H2').cmd('ifconfig H2-eth0 175.16.0.1/16')
+    
     CLI( net )
     net.stop()
 
