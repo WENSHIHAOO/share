@@ -16,64 +16,19 @@ class MyTopo(Topo):
         """Initialize a Quagga topology with 5 routers, configure their IP
            addresses, loop back interfaces, and paths to their private
            configuration directories."""
-        
-        # Directory where this file / script is located"
-
-
+ 
         hostlist=[]
-        quaggaContainer=self.addHost(name='h1',
-                                ip='192.0.1.1/24',
-                                hostname='h1',
-                                privateLogDir=True,
-                                privateRunDir=True,
-                                inMountNamespace=True,
-                                inPIDNamespace=True,
-                                inUTSNamespace=True)
+        quaggaContainer=self.addHost('H1',ip='192.0.1.1/24')
         hostlist.append(quaggaContainer);
-        quaggaContainer=self.addHost(name='r1',
-                                ip='192.0.1.2/24',
-                                hostname='r1',
-                                privateLogDir=True,
-                                privateRunDir=True,
-                                inMountNamespace=True,
-                                inPIDNamespace=True,
-                                inUTSNamespace=True)
+        quaggaContainer=self.addHost('R1',ip='192.0.1.2/24')
         hostlist.append(quaggaContainer);
-        quaggaContainer=self.addHost(name='r2',
-                                ip='195.0.1.1/24',
-                                hostname='r2',
-                                privateLogDir=True,
-                                privateRunDir=True,
-                                inMountNamespace=True,
-                                inPIDNamespace=True,
-                                inUTSNamespace=True)
+        quaggaContainer=self.addHost('R2',ip='195.0.1.1/24',)
         hostlist.append(quaggaContainer);
-        quaggaContainer=self.addHost(name='r3',
-                                ip='196.0.1.1/24',
-                                hostname='r3',
-                                privateLogDir=True,
-                                privateRunDir=True,
-                                inMountNamespace=True,
-                                inPIDNamespace=True,
-                                inUTSNamespace=True)
+        quaggaContainer=self.addHost('R3',ip='196.0.1.1/24',)
         hostlist.append(quaggaContainer);
-        quaggaContainer=self.addHost(name='r4',
-                                ip='197.1.1.2/24',
-                                hostname='r4',
-                                privateLogDir=True,
-                                privateRunDir=True,
-                                inMountNamespace=True,
-                                inPIDNamespace=True,
-                                inUTSNamespace=True)
+        quaggaContainer=self.addHost('R4',ip='197.1.1.2/24',)
         hostlist.append(quaggaContainer);
-        quaggaContainer=self.addHost(name='h2',
-                                ip='197.1.1.1/24',
-                                hostname='h2',
-                                privateLogDir=True,
-                                privateRunDir=True,
-                                inMountNamespace=True,
-                                inPIDNamespace=True,
-                                inUTSNamespace=True)
+        quaggaContainer=self.addHost('H2',ip='197.1.1.1/24')
         hostlist.append(quaggaContainer);
        
         # Setup each Quagga router, add a link between it and the IXP fabric
@@ -88,15 +43,12 @@ class MyTopo(Topo):
 def run():
     "Test linux router"
     topo = MyTopo()
-    net = Mininet(topo, controller=OVSController)
+    net = Mininet(topo)
     net.start()
-
-    dumpNodeConnections(net.hosts)
     
     net.get("r1").cmd("sysctl net.ipv4.ip_forward=1")
     net.get("r2").cmd("sysctl net.ipv4.ip_forward=1")
     net.get("r3").cmd("sysctl net.ipv4.ip_forward=1")
-    net.get("r4").cmd("sysctl net.ipv4.ip_forward=1")
     net.get("r4").cmd("sysctl net.ipv4.ip_forward=1")
     net.get("h1").cmd("sysctl net.ipv4.ip_forward=1") 
     net.get("h2").cmd("sysctl net.ipv4.ip_forward=1")
@@ -127,26 +79,10 @@ def run():
     net.get("r3").cmd("ip route add 193.0.1.0/24 via 194.0.1.1")
     net.get("r2").cmd("ip route add 196.0.1.0/24 via 195.0.1.2")
 
-    info('** Testing network connectivity\n')
-    net.ping(net.hosts)
-
-    info('** Dumping host processes\n')
-
-    for host in net.hosts:
-        host.cmdPrint("ps aux")
-
     info('** Running CLI\n')
     CLI(net)
     net.stop()
-    
-def stopNetwork():
-    "stops a network (only called on a forced cleanup)"
-
-    if net is not None:
-        info('** Tearing down Quagga network\n')
-        net.stop()
-        
+       
 if __name__ == '__main__':
-    atexit.register(stopNetwork)
     setLogLevel( 'info' )
     run()
