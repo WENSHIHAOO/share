@@ -29,12 +29,12 @@ class MyTopo(Topo):
 
         # Directory where this file / script is located"
 
-        h1 = self.addHost( 'H1', cls=LinuxRouter, ip='170.16.0.1/16' )
+        h1 = self.addHost( 'H1', ip='170.16.0.1/16', defaultRoute='via 170.16.0.2' )
         r1 = self.addHost( 'R1', cls=LinuxRouter, ip='170.16.0.2/16' )
         r2 = self.addHost( 'R2', cls=LinuxRouter, ip='171.16.0.2/16' )
         r3 = self.addHost( 'R3', cls=LinuxRouter, ip='172.16.0.2/16' )
         r4 = self.addHost( 'R4', cls=LinuxRouter, ip='175.16.0.2/16' )
-        h2 = self.addHost( 'H2', cls=LinuxRouter, ip='175.16.0.1/16' )
+        h2 = self.addHost( 'H2', ip='175.16.0.1/16', defaultRoute='via 175.16.0.2' )
         # List of Quagga host configs
         
         self.addLink(h1, r1, intfName1='H1-eth0', intfName2='R1-eth0',
@@ -53,14 +53,15 @@ class MyTopo(Topo):
 def run():
     "Test linux router"
     topo = MyTopo()
-    net = Mininet(topo=topo, waitConnected=True )
+    net = Mininet(topo=topo)
     net.start()
     info( '*** Routing Table on Router:\n' )
-    info( net[ 'R1' ].cmd( 'route' ) )
-    info( net[ 'R2' ].cmd( 'route' ) )
-    info( net[ 'R3' ].cmd( 'route' ) )
-    info( net[ 'R4' ].cmd( 'route' ) )
+    info(net['R1'].cmd("ip route add 172.16.0.0/16 via 172.16.0.1/16 dev R1-eth2"))
+    info(net['R2'].cmd("ip route add 173.16.0.0/16 via 173.16.0.1/16 dev R2-eth1"))
+    info(net['R3'].cmd("ip route add 174.16.0.0/16 via 174.16.0.1/16 dev R3-eth1"))
+    info(net['R4'].cmd("ip route add 175.16.0.0/16 via 175.16.0.2/16 dev R4-eth2"))
 
+    net.start()
     CLI( net )
     net.stop()
 
