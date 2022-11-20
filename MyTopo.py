@@ -99,14 +99,7 @@ def run():
     CLI(net)
     net.stop()
     
-def stopNetwork():
-     "stops a network (only called on a forced cleanup)"
-
-     if net is not None:
-         info('** Tearing down Quagga network\n')
-         net.stop()
          
 if __name__ == '__main__':
-    atexit.register(stopNetwork)
     setLogLevel( 'info' )
     run()
