@@ -18,31 +18,72 @@ class MyTopo(Topo):
            configuration directories."""
         
         # Directory where this file / script is located"
-        quaggaHosts = []
-        quaggaHosts.append(self.addHost(name='h1', ip='192.0.1.1/24',loIP=None))
-        quaggaHosts.append(self.addHost(name='r1', ip='192.0.1.2/24',loIP=None))
-        quaggaHosts.append(self.addHost(name='r2', ip='195.0.1.1/24',loIP=None))
-        quaggaHosts.append(self.addHost(name='r3', ip='196.0.1.1/24',loIP=None))
-        quaggaHosts.append(self.addHost(name='r4', ip='197.1.1.2/24',loIP=None))
-        quaggaHosts.append(self.addHost(name='h2', ip='197.1.1.1/24',loIP=None))
+
 
         hostlist=[]
+        quaggaContainer=self.addHost(name='h1',
+                                ip='192.0.1.1/24',
+                                hostname='h1',
+                                privateLogDir=True,
+                                privateRunDir=True,
+                                inMountNamespace=True,
+                                inPIDNamespace=True,
+                                inUTSNamespace=True)
+        self.addNodeLoopbackIntf(node=host.name, ip=host.loIP)
+        hostlist.append(quaggaContainer);
+        quaggaContainer=self.addHost(name='r1',
+                                ip='192.0.1.2/24',
+                                hostname='r1',
+                                privateLogDir=True,
+                                privateRunDir=True,
+                                inMountNamespace=True,
+                                inPIDNamespace=True,
+                                inUTSNamespace=True)
+        self.addNodeLoopbackIntf(node=host.name, ip=host.loIP)
+        hostlist.append(quaggaContainer);
+        quaggaContainer=self.addHost(name='r2',
+                                ip='195.0.1.1/24',
+                                hostname='r2',
+                                privateLogDir=True,
+                                privateRunDir=True,
+                                inMountNamespace=True,
+                                inPIDNamespace=True,
+                                inUTSNamespace=True)
+        self.addNodeLoopbackIntf(node=host.name, ip=host.loIP)
+        hostlist.append(quaggaContainer);
+        quaggaContainer=self.addHost(name='r3',
+                                ip='196.0.1.1/24',
+                                hostname='r3',
+                                privateLogDir=True,
+                                privateRunDir=True,
+                                inMountNamespace=True,
+                                inPIDNamespace=True,
+                                inUTSNamespace=True)
+        self.addNodeLoopbackIntf(node=host.name, ip=host.loIP)
+        hostlist.append(quaggaContainer);
+        quaggaContainer=self.addHost(name='r4',
+                                ip='197.1.1.2/24',
+                                hostname='r4',
+                                privateLogDir=True,
+                                privateRunDir=True,
+                                inMountNamespace=True,
+                                inPIDNamespace=True,
+                                inUTSNamespace=True)
+        self.addNodeLoopbackIntf(node=host.name, ip=host.loIP)
+        hostlist.append(quaggaContainer);
+        hostlist.append(quaggaContainer);
+        quaggaContainer=self.addHost(name='h2',
+                                ip='197.1.1.1/24',
+                                hostname='h2',
+                                privateLogDir=True,
+                                privateRunDir=True,
+                                inMountNamespace=True,
+                                inPIDNamespace=True,
+                                inUTSNamespace=True)
+        self.addNodeLoopbackIntf(node=host.name, ip=host.loIP)
+        hostlist.append(quaggaContainer);
+       
         # Setup each Quagga router, add a link between it and the IXP fabric
-        for host in quaggaHosts:
-
-            # Create an instance of a host, called a quaggaContainer
-            quaggaContainer = self.addHost(name=host.name,
-                                           ip=host.ip,
-                                           hostname=host.name,
-                                           privateLogDir=True,
-                                           privateRunDir=True,
-                                           inMountNamespace=True,
-                                           inPIDNamespace=True,
-                                           inUTSNamespace=True)
-
-            # Add a loopback interface with an IP in router's announced range
-            self.addNodeLoopbackIntf(node=host.name, ip=host.loIP)
-            hostlist.append(quaggaContainer)
             
         self.addLink(hostlist[0],hostlist[1])
         self.addLink(hostlist[4],hostlist[5])
