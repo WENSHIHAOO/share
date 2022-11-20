@@ -29,12 +29,12 @@ class MyTopo(Topo):
 
         # Directory where this file / script is located"
 
-        h1 = self.addHost( 'H1', ip='170.16.0.1/16', defaultRoute='via 170.16.0.2/16' )
-        r1 = self.addNode( 'R1', cls=LinuxRouter, ip='170.16.0.2/16' )
-        r2 = self.addNode( 'R2', cls=LinuxRouter, ip='171.16.0.2/16' )
-        r3 = self.addNode( 'R3', cls=LinuxRouter, ip='172.16.0.2/16' )
-        r4 = self.addNode( 'R4', cls=LinuxRouter, ip='175.16.0.2/16' )
-        h2 = self.addHost( 'H2', ip='175.16.0.1/16', defaultRoute='via 175.16.0.2/16' )
+        h1 = self.addHost( 'H1', ip='170.16.0.1/16', defaultRoute='via 170.16.0.2' )
+        r1 = self.addHost( 'R1', cls=LinuxRouter, ip='170.16.0.2/16' )
+        r2 = self.addHost( 'R2', cls=LinuxRouter, ip='171.16.0.2/16' )
+        r3 = self.addHost( 'R3', cls=LinuxRouter, ip='172.16.0.2/16' )
+        r4 = self.addHost( 'R4', cls=LinuxRouter, ip='175.16.0.2/16' )
+        h2 = self.addHost( 'H2', ip='175.16.0.1/16', defaultRoute='via 175.16.0.2' )
         # List of Quagga host configs
         
         self.addLink(h1, r1, intfName1='H1-eth0', intfName2='R1-eth0',
