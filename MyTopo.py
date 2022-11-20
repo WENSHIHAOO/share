@@ -29,37 +29,26 @@ class MyTopo(Topo):
 
         # Directory where this file / script is located"
 
-        h1 = self.addHost( 'H1', ip='170.16.0.1/16', defaultRoute='via 170.16.0.0/16' )
-        r1 = self.addNode( 'R1', cls=LinuxRouter, ip='170.16.0.0/16' )
-        r2 = self.addNode( 'R2', cls=LinuxRouter, ip='171.16.0.0/16' )
-        r3 = self.addNode( 'R3', cls=LinuxRouter, ip='172.16.0.0/16' )
-        r4 = self.addNode( 'R4', cls=LinuxRouter, ip='175.16.0.0/16' )
-        h2 = self.addHost( 'H2', ip='175.16.0.1/16', defaultRoute='via 175.16.0.0/16' )
+        h1 = self.addHost( 'H1', ip='170.16.0.1/16', defaultRoute='via 170.16.0.2/16' )
+        r1 = self.addNode( 'R1', cls=LinuxRouter, ip='170.16.0.2/16' )
+        r2 = self.addNode( 'R2', cls=LinuxRouter, ip='171.16.0.2/16' )
+        r3 = self.addNode( 'R3', cls=LinuxRouter, ip='172.16.0.2/16' )
+        r4 = self.addNode( 'R4', cls=LinuxRouter, ip='175.16.0.2/16' )
+        h2 = self.addHost( 'H2', ip='175.16.0.1/16', defaultRoute='via 175.16.0.2/16' )
         # List of Quagga host configs
         
-        self.addLink( r1, h1, intfName2='r1-eth0',
-                      params2={ 'ip' : '170.16.0.2/16' } ) 
+        self.addLink( h1, r1, intfName2='h1-eth0',
+                      params2={ 'ip' : '170.16.0.1/16' } ) 
         self.addLink( r1, r2, intfName2='r1-eth1',
                       params2={ 'ip' : '171.16.0.1/16' } )
         self.addLink( r1, r3, intfName2='r1-eth2',
                       params2={ 'ip' : '172.16.0.1/16' } )
-        
-        self.addLink( r2, r1, intfName2='r2-eth0',
-                      params2={ 'ip' : '171.16.0.2/16' } ) 
         self.addLink( r2, r4, intfName2='r2-eth1',
                       params2={ 'ip' : '173.16.0.1/16' } )
-
-        self.addLink( r3, r1, intfName2='r3-eth0',
-                      params2={ 'ip' : '172.16.0.2/16' } ) 
         self.addLink( r3, r4, intfName2='r3-eth1',
                       params2={ 'ip' : '174.16.0.1/16' } )
-        
-        self.addLink( r4, r2, intfName2='r4-eth0',
-                      params2={ 'ip' : '173.16.0.2/16' } ) 
-        self.addLink( r4, r3, intfName2='r4-eth1',
-                      params2={ 'ip' : '174.16.0.2/16' } )
-        self.addLink( r4, h2, intfName2='r4-eth2',
-                      params2={ 'ip' : '175.16.0.2/16' } )
+        self.addLink( h2, r4, intfName2='r4-eth2',
+                      params2={ 'ip' : '175.16.0.1/16' } )
         
 def run():
     "Test linux router"
