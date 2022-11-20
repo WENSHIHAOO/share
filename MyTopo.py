@@ -59,20 +59,7 @@ def run():
     info( net[ 'R2' ].cmd( 'route' ) )
     info( net[ 'R3' ].cmd( 'route' ) )
     info( net[ 'R4' ].cmd( 'route' ) )
-    
-    net.get('H1').cmd('ifconfig H1-eth0 170.16.0.1/16')
-    net.get('R1').cmd('ifconfig R1-eth0 170.16.0.2/16')
-    net.get('R1').cmd('ifconfig R1-eth1 171.16.0.1/16')
-    net.get('R1').cmd('ifconfig R1-eth2 172.16.0.1/16')
-    net.get('R2').cmd('ifconfig R2-eth0 171.16.0.2/16')
-    net.get('R2').cmd('ifconfig R2-eth1 173.16.0.1/16')
-    net.get('R3').cmd('ifconfig R3-eth0 172.16.0.2/16')
-    net.get('R3').cmd('ifconfig R3-eth1 174.16.0.1/16')
-    net.get('R4').cmd('ifconfig R4-eth0 173.16.0.2/16')
-    net.get('R4').cmd('ifconfig R4-eth1 174.16.0.2/16')
-    net.get('R4').cmd('ifconfig R4-eth2 175.16.0.2/16')
-    net.get('H2').cmd('ifconfig H2-eth0 175.16.0.1/16')
-    
+
     CLI( net )
     net.stop()
 
