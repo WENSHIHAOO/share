@@ -74,7 +74,6 @@ class MyTopo(Topo):
                                 inMountNamespace=True,
                                 inPIDNamespace=True,
                                 inUTSNamespace=True)
-        self.addNodeLoopbackIntf(node='h2', ip=None)
         hostlist.append(quaggaContainer);
        
         # Setup each Quagga router, add a link between it and the IXP fabric
