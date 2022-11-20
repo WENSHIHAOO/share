@@ -37,12 +37,18 @@ class MyTopo(Topo):
         h2 = self.addHost( 'H2', ip='175.16.0.1/16', defaultRoute='via 175.16.0.2/16' )
         # List of Quagga host configs
         
-        self.addLink( h1, r1, intfName2='H1-R1') 
-        self.addLink( r1, r2, intfName2='R1-R2')
-        self.addLink( r1, r3, intfName2='R1-R3')
-        self.addLink( r2, r4, intfName2='R2-R4')
-        self.addLink( r3, r4, intfName2='R3-R4')
-        self.addLink( h2, r4, intfName2='H2-R4')
+        self.addLink(h1, r1, intfName1='H1-eth0', intfName2='R1-eth0',
+                     params1={'ip': '170.16.0.1/16'},params2={'ip': '170.16.0.2/16'}) 
+        self.addLink( r1, r2, intfName1='R1-eth1', intfName2='R2-eth0',
+                     params1={'ip': '171.16.0.1/16'},params2={'ip': '171.16.0.2/16'})
+        self.addLink( r1, r3, intfName1='R1-eth2', intfName2='R3-eth0',
+                     params1={'ip': '172.16.0.1/16'},params2={'ip': '172.16.0.2/16'})
+        self.addLink( r2, r4, intfName1='R2-eth1', intfName2='R4-eth0',
+                     params1={'ip': '173.16.0.1/16'},params2={'ip': '173.16.0.2/16'})
+        self.addLink( r3, r4, intfName1='R3-eth1', intfName2='R4-eth1',
+                     params1={'ip': '174.16.0.1/16'},params2={'ip': '174.16.0.2/16'})
+        self.addLink( h2, r4, intfName1='H2-eth0', intfName2='R4-eth2',
+                     params1={'ip': '175.16.0.1/16'},params2={'ip': '175.16.0.2/16'})
 def run():
     "Test linux router"
     topo = MyTopo()
