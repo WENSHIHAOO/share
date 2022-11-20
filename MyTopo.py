@@ -29,7 +29,6 @@ class MyTopo(Topo):
                                 inMountNamespace=True,
                                 inPIDNamespace=True,
                                 inUTSNamespace=True)
-        self.addNodeLoopbackIntf(node='h1', ip=None)
         hostlist.append(quaggaContainer);
         quaggaContainer=self.addHost(name='r1',
                                 ip='192.0.1.2/24',
@@ -39,7 +38,6 @@ class MyTopo(Topo):
                                 inMountNamespace=True,
                                 inPIDNamespace=True,
                                 inUTSNamespace=True)
-        self.addNodeLoopbackIntf(node='r1', ip=None)
         hostlist.append(quaggaContainer);
         quaggaContainer=self.addHost(name='r2',
                                 ip='195.0.1.1/24',
@@ -49,7 +47,6 @@ class MyTopo(Topo):
                                 inMountNamespace=True,
                                 inPIDNamespace=True,
                                 inUTSNamespace=True)
-        self.addNodeLoopbackIntf(node='r2', ip=None)
         hostlist.append(quaggaContainer);
         quaggaContainer=self.addHost(name='r3',
                                 ip='196.0.1.1/24',
@@ -59,7 +56,6 @@ class MyTopo(Topo):
                                 inMountNamespace=True,
                                 inPIDNamespace=True,
                                 inUTSNamespace=True)
-        self.addNodeLoopbackIntf(node='r3', ip=None)
         hostlist.append(quaggaContainer);
         quaggaContainer=self.addHost(name='r4',
                                 ip='197.1.1.2/24',
@@ -69,8 +65,6 @@ class MyTopo(Topo):
                                 inMountNamespace=True,
                                 inPIDNamespace=True,
                                 inUTSNamespace=True)
-        self.addNodeLoopbackIntf(node='r4', ip=None)
-        hostlist.append(quaggaContainer);
         hostlist.append(quaggaContainer);
         quaggaContainer=self.addHost(name='h2',
                                 ip='197.1.1.1/24',
