@@ -3,10 +3,18 @@ from mininet.net import Mininet
 from mininet.node import Node
 from mininet.log import setLogLevel, info
 from mininet.cli import CLI
-from mininet.node import OVSController
-import atexit
-from mininet.util import dumpNodeConnections
 
+class LinuxRouter( Node ):
+    "A Node with IP forwarding enabled."
+    # pylint: disable=arguments-differ
+    def config( self, **params ):
+        super( LinuxRouter, self).config( **params )
+        # Enable forwarding on the router
+        self.cmd( 'sysctl net.ipv4.ip_forward=1' )
+    def terminate( self ):
+        self.cmd( 'sysctl net.ipv4.ip_forward=0' )
+        super( LinuxRouter, self ).terminate()
+        
 net = None
 class MyTopo(Topo):
 
@@ -19,17 +27,17 @@ class MyTopo(Topo):
  
     
         hostlist=[]
-        quaggaContainer=self.addHost('H1', ip='192.0.1.1/24')
+        quaggaContainer=self.addHost('H1', cls=LinuxRouter, ip='192.0.1.1/24')
         hostlist.append(quaggaContainer);
-        quaggaContainer=self.addHost('R1', ip='192.0.1.2/24')
+        quaggaContainer=self.addHost('R1', cls=LinuxRouter, ip='192.0.1.2/24')
         hostlist.append(quaggaContainer);
-        quaggaContainer=self.addHost('R2', ip='195.0.1.1/24')
+        quaggaContainer=self.addHost('R2', cls=LinuxRouter, ip='195.0.1.1/24')
         hostlist.append(quaggaContainer);
-        quaggaContainer=self.addHost('R3', ip='196.0.1.1/24')
+        quaggaContainer=self.addHost('R3', cls=LinuxRouter, ip='196.0.1.1/24')
         hostlist.append(quaggaContainer);
-        quaggaContainer=self.addHost('R4', ip='197.1.1.2/24')
+        quaggaContainer=self.addHost('R4', cls=LinuxRouter, ip='197.1.1.2/24')
         hostlist.append(quaggaContainer);
-        quaggaContainer=self.addHost('H2', ip='197.1.1.1/24')
+        quaggaContainer=self.addHost('H2', cls=LinuxRouter, ip='197.1.1.1/24')
         hostlist.append(quaggaContainer);
        
         # Setup each Quagga router, add a link between it and the IXP fabric
@@ -46,13 +54,6 @@ def run():
     topo = MyTopo()
     net = Mininet(topo)
     net.start()
-    
-    net.get("R1").cmd("sysctl net.ipv4.ip_forward=1")
-    net.get("R2").cmd("sysctl net.ipv4.ip_forward=1")
-    net.get("R3").cmd("sysctl net.ipv4.ip_forward=1")
-    net.get("R4").cmd("sysctl net.ipv4.ip_forward=1")
-    net.get("H1").cmd("sysctl net.ipv4.ip_forward=1") 
-    net.get("H2").cmd("sysctl net.ipv4.ip_forward=1")
     
     net.get("R1").cmd("ifconfig R1-eth1 193.0.1.1") 
     net.get("R1").cmd("ifconfig R1-eth2 194.0.1.1")
