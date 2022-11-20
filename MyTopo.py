@@ -17,18 +17,61 @@ class MyTopo(Topo):
            addresses, loop back interfaces, and paths to their private
            configuration directories."""
  
+    
         hostlist=[]
-        quaggaContainer=self.addHost('H1',ip='192.0.1.1/24')
+        quaggaContainer=self.addHost(name='H1',
+                                 ip='192.0.1.1/24',
+                                 hostname='h1',
+                                 privateLogDir=True,
+                                 privateRunDir=True,
+                                 inMountNamespace=True,
+                                 inPIDNamespace=True,
+                                 inUTSNamespace=True)
         hostlist.append(quaggaContainer);
-        quaggaContainer=self.addHost('R1',ip='192.0.1.2/24')
+        quaggaContainer=self.addHost(name='R1',
+                                ip='192.0.1.2/24',
+                                hostname='r1',
+                                privateLogDir=True,
+                                privateRunDir=True,
+                                inMountNamespace=True,
+                                inPIDNamespace=True,
+                                inUTSNamespace=True)
         hostlist.append(quaggaContainer);
-        quaggaContainer=self.addHost('R2',ip='195.0.1.1/24',)
+        quaggaContainer=self.addHost(name='R2',
+                                ip='195.0.1.1/24',
+                                hostname='r2',
+                                privateLogDir=True,
+                                privateRunDir=True,
+                                inMountNamespace=True,
+                                inPIDNamespace=True,
+                                inUTSNamespace=True)
         hostlist.append(quaggaContainer);
-        quaggaContainer=self.addHost('R3',ip='196.0.1.1/24',)
+        quaggaContainer=self.addHost(name='R3',
+                                ip='196.0.1.1/24',
+                                hostname='r3',
+                                privateLogDir=True,
+                                privateRunDir=True,
+                                inMountNamespace=True,
+                                inPIDNamespace=True,
+                                inUTSNamespace=True)
         hostlist.append(quaggaContainer);
-        quaggaContainer=self.addHost('R4',ip='197.1.1.2/24',)
+        quaggaContainer=self.addHost(name='R4',
+                                ip='197.1.1.2/24',
+                                hostname='r4',
+                                privateLogDir=True,
+                                privateRunDir=True,
+                                inMountNamespace=True,
+                                inPIDNamespace=True,
+                                inUTSNamespace=True)
         hostlist.append(quaggaContainer);
-        quaggaContainer=self.addHost('H2',ip='197.1.1.1/24')
+        quaggaContainer=self.addHost(name='H2',
+                                ip='197.1.1.1/24',
+                                hostname='h2',
+                                privateLogDir=True,
+                                privateRunDir=True,
+                                inMountNamespace=True,
+                                inPIDNamespace=True,
+                                inUTSNamespace=True)
         hostlist.append(quaggaContainer);
        
         # Setup each Quagga router, add a link between it and the IXP fabric
