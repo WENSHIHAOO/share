@@ -18,39 +18,22 @@ class LinuxRouter( Node ):
 net = None
 class MyTopo(Topo):
 
-    "Creates a topology of Quagga routers"
-
-    def build(self):
-        """Initialize a Quagga topology with 5 routers, configure their IP
-           addresses, loop back interfaces, and paths to their private
-           configuration directories."""
- 
-    
-        hostlist=[]
-        quaggaContainer=self.addHost('H1', cls=LinuxRouter, ip='192.0.1.1/24')
-        hostlist.append(quaggaContainer);
-        quaggaContainer=self.addHost('R1', cls=LinuxRouter, ip='192.0.1.2/24')
-        hostlist.append(quaggaContainer);
-        quaggaContainer=self.addHost('R2', cls=LinuxRouter, ip='195.0.1.1/24')
-        hostlist.append(quaggaContainer);
-        quaggaContainer=self.addHost('R3', cls=LinuxRouter, ip='196.0.1.1/24')
-        hostlist.append(quaggaContainer);
-        quaggaContainer=self.addHost('R4', cls=LinuxRouter, ip='197.1.1.2/24')
-        hostlist.append(quaggaContainer);
-        quaggaContainer=self.addHost('H2', cls=LinuxRouter, ip='197.1.1.1/24')
-        hostlist.append(quaggaContainer);
-       
-        # Setup each Quagga router, add a link between it and the IXP fabric
-            
-        self.addLink(hostlist[0],hostlist[1])
-        self.addLink(hostlist[4],hostlist[5])
-        self.addLink(hostlist[2],hostlist[4])
-        self.addLink(hostlist[3],hostlist[4])
-        self.addLink(hostlist[1],hostlist[2])
-        self.addLink(hostlist[1],hostlist[3])
+    def build(self):   
+        H1=self.addHost('H1', cls=LinuxRouter, ip='192.0.1.1/24')
+        R1=self.addHost('R1', cls=LinuxRouter, ip='192.0.1.2/24')
+        R2=self.addHost('R2', cls=LinuxRouter, ip='195.0.1.1/24')
+        R3=self.addHost('R3', cls=LinuxRouter, ip='196.0.1.1/24')
+        R4=self.addHost('R4', cls=LinuxRouter, ip='197.1.1.2/24')
+        H2=self.addHost('H2', cls=LinuxRouter, ip='197.1.1.1/24')
+        
+        self.addLink(H1,R1)
+        self.addLink(R4,H2)
+        self.addLink(R2,R4)
+        self.addLink(R3,R4)
+        self.addLink(R1,R2)
+        self.addLink(R1,R3)
     
 def run():
-    "Test linux router"
     topo = MyTopo()
     net = Mininet(topo)
     net.start()
@@ -84,8 +67,7 @@ def run():
     info('** Running CLI\n')
     CLI(net)
     net.stop()
-    
-         
+      
 if __name__ == '__main__':
     setLogLevel( 'info' )
     run()
