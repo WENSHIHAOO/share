@@ -19,23 +19,17 @@ class MyTopo(Topo):
  
     
         hostlist=[]
-        quaggaContainer=self.addHost('H1',
-                                 ip='192.0.1.1/24')
+        quaggaContainer=self.addHost('H1', ip='192.0.1.1/24')
         hostlist.append(quaggaContainer);
-        quaggaContainer=self.addHost('R1',
-                                ip='192.0.1.2/24')
+        quaggaContainer=self.addHost('R1', ip='192.0.1.2/24')
         hostlist.append(quaggaContainer);
-        quaggaContainer=self.addHost('R2',
-                                ip='195.0.1.1/24')
+        quaggaContainer=self.addHost('R2', ip='195.0.1.1/24')
         hostlist.append(quaggaContainer);
-        quaggaContainer=self.addHost('R3',
-                                ip='196.0.1.1/24')
+        quaggaContainer=self.addHost('R3', ip='196.0.1.1/24')
         hostlist.append(quaggaContainer);
-        quaggaContainer=self.addHost('R4',
-                                ip='197.1.1.2/24')
+        quaggaContainer=self.addHost('R4', ip='197.1.1.2/24')
         hostlist.append(quaggaContainer);
-        quaggaContainer=self.addHost('H2',
-                                ip='197.1.1.1/24')
+        quaggaContainer=self.addHost('H2', ip='197.1.1.1/24')
         hostlist.append(quaggaContainer);
        
         # Setup each Quagga router, add a link between it and the IXP fabric
@@ -53,7 +47,6 @@ def run():
     net = Mininet(topo)
     net.start()
     
-    dumpNodeConnections(net.hosts)
     net.get("R1").cmd("sysctl net.ipv4.ip_forward=1")
     net.get("R2").cmd("sysctl net.ipv4.ip_forward=1")
     net.get("R3").cmd("sysctl net.ipv4.ip_forward=1")
