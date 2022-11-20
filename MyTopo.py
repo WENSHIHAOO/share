@@ -21,7 +21,7 @@ class MyTopo(Topo):
         hostlist=[]
         quaggaContainer=self.addHost(name='H1',
                                  ip='192.0.1.1/24',
-                                 hostname='h1',
+                                 hostname='H1',
                                  privateLogDir=True,
                                  privateRunDir=True,
                                  inMountNamespace=True,
@@ -30,7 +30,7 @@ class MyTopo(Topo):
         hostlist.append(quaggaContainer);
         quaggaContainer=self.addHost(name='R1',
                                 ip='192.0.1.2/24',
-                                hostname='r1',
+                                hostname='R1',
                                 privateLogDir=True,
                                 privateRunDir=True,
                                 inMountNamespace=True,
@@ -39,7 +39,7 @@ class MyTopo(Topo):
         hostlist.append(quaggaContainer);
         quaggaContainer=self.addHost(name='R2',
                                 ip='195.0.1.1/24',
-                                hostname='r2',
+                                hostname='R2',
                                 privateLogDir=True,
                                 privateRunDir=True,
                                 inMountNamespace=True,
@@ -48,7 +48,7 @@ class MyTopo(Topo):
         hostlist.append(quaggaContainer);
         quaggaContainer=self.addHost(name='R3',
                                 ip='196.0.1.1/24',
-                                hostname='r3',
+                                hostname='R3',
                                 privateLogDir=True,
                                 privateRunDir=True,
                                 inMountNamespace=True,
@@ -57,7 +57,7 @@ class MyTopo(Topo):
         hostlist.append(quaggaContainer);
         quaggaContainer=self.addHost(name='R4',
                                 ip='197.1.1.2/24',
-                                hostname='r4',
+                                hostname='R4',
                                 privateLogDir=True,
                                 privateRunDir=True,
                                 inMountNamespace=True,
@@ -66,7 +66,7 @@ class MyTopo(Topo):
         hostlist.append(quaggaContainer);
         quaggaContainer=self.addHost(name='H2',
                                 ip='197.1.1.1/24',
-                                hostname='h2',
+                                hostname='H2',
                                 privateLogDir=True,
                                 privateRunDir=True,
                                 inMountNamespace=True,
@@ -89,6 +89,7 @@ def run():
     net = Mininet(topo)
     net.start()
     
+    dumpNodeConnections(net.hosts)
     net.get("R1").cmd("sysctl net.ipv4.ip_forward=1")
     net.get("R2").cmd("sysctl net.ipv4.ip_forward=1")
     net.get("R3").cmd("sysctl net.ipv4.ip_forward=1")
@@ -96,12 +97,12 @@ def run():
     net.get("H1").cmd("sysctl net.ipv4.ip_forward=1") 
     net.get("H2").cmd("sysctl net.ipv4.ip_forward=1")
     
-    net.get("R1").cmd("ifconfig r1-eth1 193.0.1.1") 
-    net.get("R1").cmd("ifconfig r1-eth2 194.0.1.1")
-    net.get("R2").cmd("ifconfig r2-eth1 193.0.1.2") 
-    net.get("R3").cmd("ifconfig r3-eth1 194.0.1.2")
-    net.get("R4").cmd("ifconfig r4-eth1 195.0.1.2")
-    net.get("R4").cmd("ifconfig r4-eth2 196.0.1.2")
+    net.get("R1").cmd("ifconfig R1-eth1 193.0.1.1") 
+    net.get("R1").cmd("ifconfig R1-eth2 194.0.1.1")
+    net.get("R2").cmd("ifconfig R2-eth1 193.0.1.2") 
+    net.get("R3").cmd("ifconfig R3-eth1 194.0.1.2")
+    net.get("R4").cmd("ifconfig R4-eth1 195.0.1.2")
+    net.get("R4").cmd("ifconfig R4-eth2 196.0.1.2")
     
     net.get("H1").cmd("route add default gw 192.0.1.2")
     net.get("H2").cmd("route add default gw 197.1.1.2")
@@ -122,10 +123,26 @@ def run():
     net.get("R3").cmd("ip route add 193.0.1.0/24 via 194.0.1.1")
     net.get("R2").cmd("ip route add 196.0.1.0/24 via 195.0.1.2")
 
+    info('** Testing network connectivity\n')
+    net.ping(net.hosts)
+
+    info('** Dumping host processes\n')
+
+    for host in net.hosts:
+        host.cmdPrint("ps aux")
+
     info('** Running CLI\n')
     CLI(net)
     net.stop()
-       
+    
+def stopNetwork():
+     "stops a network (only called on a forced cleanup)"
+
+     if net is not None:
+         info('** Tearing down Quagga network\n')
+         net.stop()
+         
 if __name__ == '__main__':
+    atexit.register(stopNetwork)
     setLogLevel( 'info' )
     run()
