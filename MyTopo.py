@@ -28,10 +28,12 @@ class MyTopo(Topo):
         
         self.addLink(H1,R1)
         self.addLink(R4,H2)
-        self.addLink(R2,R4)
-        self.addLink(R3,R4)
         self.addLink(R1,R2)
         self.addLink(R1,R3)
+        self.addLink(R2,R4)
+        self.addLink(R3,R4)
+        #self.addLink(R1,R2)
+        #self.addLink(R1,R3)
     
 def run():
     topo = MyTopo()
