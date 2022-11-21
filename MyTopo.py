@@ -47,23 +47,25 @@ def run():
     
     net.get("H1").cmd("route add default gw 170.0.0.2")
     net.get("H2").cmd("route add default gw 175.0.0.2")
-    net.get("R1").cmd("ip route add 175.0.0.0/24 via 171.0.0.2")
+    
     net.get("R1").cmd("ip route add 173.0.0.0/24 via 171.0.0.2")
-    net.get("R2").cmd("ip route add 175.0.0.0/24 via 173.0.0.2")
-    net.get("R4").cmd("ip route add 171.0.0.0/24 via 173.0.0.1")
-    net.get("R4").cmd("ip route add 170.0.0.0/24 via 173.0.0.1")
-    net.get("R2").cmd("ip route add 170.0.0.0/24 via 171.0.0.1")
-   
+    net.get("R1").cmd("ip route add 175.0.0.0/24 via 171.0.0.2")
     net.get("R1").cmd("ip route add 174.0.0.0/24 via 172.0.0.2")
-    net.get("R3").cmd("ip route add 175.0.0.0/24 via 174.0.0.2")
-    net.get("R4").cmd("ip route add 172.0.0.0/24 via 174.0.0.1")
-    net.get("R3").cmd("ip route add 170.0.0.0/24 via 172.0.0.1")
-
-    net.get("R3").cmd("ip route add 173.0.0.0/24 via 174.0.0.2")
+    
+    net.get("R2").cmd("ip route add 170.0.0.0/24 via 171.0.0.1")
     net.get("R2").cmd("ip route add 172.0.0.0/24 via 171.0.0.1")
-    net.get("R3").cmd("ip route add 171.0.0.0/24 via 172.0.0.1")
     net.get("R2").cmd("ip route add 174.0.0.0/24 via 173.0.0.2")
+    net.get("R2").cmd("ip route add 175.0.0.0/24 via 173.0.0.2")
+    
+    net.get("R3").cmd("ip route add 170.0.0.0/24 via 172.0.0.1")
+    net.get("R3").cmd("ip route add 171.0.0.0/24 via 172.0.0.1")
+    net.get("R3").cmd("ip route add 173.0.0.0/24 via 174.0.0.2")
+    net.get("R3").cmd("ip route add 175.0.0.0/24 via 174.0.0.2")
 
+    net.get("R4").cmd("ip route add 170.0.0.0/24 via 173.0.0.1")
+    net.get("R4").cmd("ip route add 171.0.0.0/24 via 173.0.0.1")
+    net.get("R4").cmd("ip route add 172.0.0.0/24 via 174.0.0.1")
+    
     info('** Running CLI\n')
     CLI(net)
     net.stop()
