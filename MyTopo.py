@@ -15,7 +15,6 @@ class LinuxRouter( Node ):
         self.cmd( 'sysctl net.ipv4.ip_forward=0' )
         super( LinuxRouter, self ).terminate()
         
-net = None
 class MyTopo(Topo):
 
     def build(self):   
@@ -35,7 +34,7 @@ class MyTopo(Topo):
     
 def run():
     topo = MyTopo()
-    net = Mininet(topo)
+    net = Mininet(topo=topo)
     net.start()
     
     net.get("R1").cmd("ifconfig R1-eth1 171.0.0.1") 
@@ -66,7 +65,6 @@ def run():
     net.get("R4").cmd("ip route add 171.0.0.0/16 via 173.0.0.1")
     net.get("R4").cmd("ip route add 172.0.0.0/16 via 174.0.0.1")
     
-    info('** Running CLI\n')
     CLI(net)
     net.stop()
       
