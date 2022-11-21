@@ -27,11 +27,11 @@ class MyTopo(Topo):
         H2=self.addHost('H2', cls=LinuxRouter, ip='175.0.0.1/24')
         
         self.addLink(H1,R1)
-        self.addLink(R4,H2)
         self.addLink(R2,R4)
         self.addLink(R3,R4)
         self.addLink(R1,R2)
         self.addLink(R1,R3)
+        self.addLink(R4,H2)
     
 def run():
     topo = MyTopo()
